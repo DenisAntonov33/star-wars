@@ -1,11 +1,12 @@
 "use client"
 import styles from "./page.module.css";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {charactersService} from "@/service/people/CharactersService";
 import {useCharactersStore} from "@/store/useCharactersStore";
 import {Pagination} from "@mui/material";
 import {SearchBar} from "@/components/search-field/SearchField";
 import {CharacterCard} from "@/app/characters/components/CharacterCard";
+import {SkeletonList} from "@/app/characters/components/SkeletonList";
 
 export default function Home() {
     const {charactersList, isLoading, charactersCount} = useCharactersStore();
@@ -27,13 +28,15 @@ export default function Home() {
         setCurrentPage(1);
     }
 
-    const pageTotal = Math.ceil(charactersCount / 10);
+    const pageTotal = useMemo(() => {
+        return Math.ceil(charactersCount / 10);
+    }, [charactersCount])
 
     return (
         <div className={styles.page}>
             <SearchBar onChange={handleSearch}/>
             <main className={styles.main}>
-                {isLoading && <div>Loading...</div>}
+                {isLoading && <SkeletonList />}
                 {!isLoading && charactersList.map(item => (
                     <CharacterCard key={item.id} character={item} />
                 ))}

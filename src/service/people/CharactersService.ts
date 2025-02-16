@@ -8,7 +8,6 @@ class CharactersService {
         try {
             useCharactersStore.setState({isLoading: true})
             const response = await CharacterApi.fetchCharacters(page, query);
-            console.log('response >>', response)
             useCharactersStore.setState<ICharacterStore>({
                 isLoading: false,
                 currentPage: page,

@@ -1,26 +1,26 @@
-import {usePeopleStore} from "@/store/usePeopleStore";
+import {useCharactersStore} from "@/store/useCharactersStore";
 import {CharacterApi} from "@/api/characters/charactersApi";
 import {ICharacterModel, ICharacterStore} from "@/store/types";
 import {ICharacterItemApiResponse} from "@/api/characters/types";
 
-class PeopleService {
-    async loadPeople(page = 1) {
+class CharactersService {
+    async loadCharacters(page = 1, query = '') {
         try {
-            usePeopleStore.setState({isLoading: true})
-            const response = await CharacterApi.fetchPeople(page);
+            useCharactersStore.setState({isLoading: true})
+            const response = await CharacterApi.fetchCharacters(page, query);
             console.log('response >>', response)
-            usePeopleStore.setState<ICharacterStore>({
+            useCharactersStore.setState<ICharacterStore>({
                 isLoading: false,
                 currentPage: page,
-                peopleList: this.addCharacterId(response.results),
-                peopleCount: response.count
+                charactersList: this.addCharacterId(response.results),
+                charactersCount: response.count
             });
         } catch (e) {
             console.debug('e >>', e)
             if (e instanceof Error) {
-                usePeopleStore.setState({isLoading: false, errorMessage: e.message});
+                useCharactersStore.setState({isLoading: false, errorMessage: e.message});
             } else {
-                usePeopleStore.setState({isLoading: false, errorMessage: 'Something went wrong'});
+                useCharactersStore.setState({isLoading: false, errorMessage: 'Something went wrong'});
             }
         }
     }
@@ -37,4 +37,4 @@ class PeopleService {
     }
 }
 
-export const peopleService = new PeopleService();
+export const charactersService = new CharactersService();

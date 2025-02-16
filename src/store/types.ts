@@ -1,8 +1,8 @@
 import {ICharacterItemApiResponse} from "@/api/characters/types";
 
 export interface ICharacterStore {
-    peopleList: ICharacterModel[];
-    peopleCount: number;
+    charactersList: ICharacterModel[];
+    charactersCount: number;
     isLoading: boolean;
     errorMessage: string;
     currentPage: number;

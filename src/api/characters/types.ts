@@ -1,7 +1,7 @@
 export interface ICharacterItemApiResponse {
     name: string;
     height: string;
-    mas: string;
+    mass: string;
     birth_year: string;
     url: string;
 }

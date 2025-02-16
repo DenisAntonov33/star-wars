@@ -3,9 +3,9 @@ import styles from "./page.module.css";
 import {useEffect, useState} from "react";
 import {charactersService} from "@/service/people/CharactersService";
 import {useCharactersStore} from "@/store/useCharactersStore";
-import Link from "next/link";
 import {Pagination} from "@mui/material";
 import {SearchBar} from "@/components/search-field/SearchField";
+import {CharacterCard} from "@/app/characters/components/CharacterCard";
 
 export default function Home() {
     const {charactersList, isLoading, charactersCount} = useCharactersStore();
@@ -35,10 +35,7 @@ export default function Home() {
             <main className={styles.main}>
                 {isLoading && <div>Loading...</div>}
                 {!isLoading && charactersList.map(item => (
-                    <div key={item.name}>
-                        <div>{item.name}</div>
-                        <Link href={`/characters/${item.id}`}>Go</Link>
-                    </div>
+                    <CharacterCard key={item.id} character={item} />
                 ))}
             </main>
             <footer className={styles.footer}>

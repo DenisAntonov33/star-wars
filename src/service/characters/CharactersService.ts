@@ -43,7 +43,11 @@ class CharactersService {
     async updateCharacter(id: string, updatedCharacter: Partial<ICharacterModel>) {
         try {
             const {charactersMap} = useCharactersStore.getState?.();
-            const targetCharacter: ICharacterModel = charactersMap.get(id);
+            const targetCharacter: ICharacterModel | undefined = charactersMap.get(id);
+
+            if (!targetCharacter) {
+                throw new Error('Error while updating character with id' + id)
+            }
             const newCharacter = Object.assign({}, targetCharacter, updatedCharacter);
             const response = await CharacterApi.patchCharacter(id, newCharacter);
 

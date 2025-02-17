@@ -8,6 +8,9 @@ import {SearchBar} from "@/components/search-field/SearchField";
 import {CharacterCard} from "@/app/characters/components/CharacterCard";
 import {SkeletonList} from "@/app/characters/components/SkeletonList";
 import {useCharactersList} from "@/store/character/hooks/useCharactersList";
+import debounce from "@mui/utils/debounce";
+
+const DEBOUNCE_SEARCH_TIME = 500;
 
 export default function Home() {
     const {isLoading, charactersCount} = useCharactersStore();
@@ -23,12 +26,12 @@ export default function Home() {
         setCurrentPage(newPage);
         charactersService.loadCharacters(newPage, searchQuery);
     }
-    
-    const handleSearch = async (newQuery: string) => {
+
+    const handleSearch = debounce(async (newQuery: string) => {
         setSearchQuery(newQuery);
         await charactersService.loadCharacters(1, newQuery)
         setCurrentPage(1);
-    }
+    }, DEBOUNCE_SEARCH_TIME)
 
     const pageTotal = useMemo(() => {
         return Math.ceil(charactersCount / 10);
@@ -38,9 +41,9 @@ export default function Home() {
         <>
             <SearchBar onChange={handleSearch}/>
             <main className={styles.main}>
-                {isLoading && <SkeletonList />}
+                {isLoading && <SkeletonList/>}
                 {!isLoading && charactersList.map(item => (
-                    <CharacterCard key={item.id} character={item} />
+                    <CharacterCard key={item.id} character={item}/>
                 ))}
             </main>
             <footer className={styles.footer}>

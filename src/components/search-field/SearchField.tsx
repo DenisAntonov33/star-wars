@@ -17,7 +17,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({onChange}) => {
             <SearchInputBase
                 placeholder="Search…"
                 inputProps={{
-                    'aria-label': 'search', onChange: (evt) => onChange(evt.target.value)
+                    'aria-label': 'search', onChange: (evt: React.ChangeEvent<HTMLInputElement>) => onChange(evt.target.value)
                 }}
             />
         </SearchWrapper>

@@ -3,7 +3,7 @@ export const apiGet = <Response>(input: string | URL, init?: RequestInit): Promi
     return fetch(input, init).then(r => r.json());
 }
 
-export const apiPatch = <Response, Payload = {}>(input: string | URL, payload: Payload): Promise<Response> => {
+export const apiPatch = <Response, Payload>(input: string | URL, payload: Payload): Promise<Response> => {
     console.debug('PATCH payload >>', payload);
-    return Promise.resolve(payload);
+    return Promise.resolve(payload as unknown as Response);
 }

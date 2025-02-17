@@ -23,7 +23,7 @@ export class CharacterApi {
 
     static patchCharacter = (characterId: string, updatedCharacter: ICharacterModel): Promise<ICharacterModel> => {
         const characterPayload = CharacterApiProcessor.toApiCharacter(updatedCharacter);
-        return apiPatch<ICharacterModel>(`${CharacterApi.baseUrl}/${characterId}`, characterPayload)
+        return apiPatch<ICharacterModel, ICharacterItemApiObject>(`${CharacterApi.baseUrl}/${characterId}`, characterPayload)
             .then(CharacterApiProcessor.fromApiCharacter);
     }
 }

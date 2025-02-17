@@ -22,7 +22,8 @@ export default function Home() {
         charactersService.loadCharacters();
     }, []);
 
-    const handlePageChange = (_, newPage: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
         setCurrentPage(newPage);
         charactersService.loadCharacters(newPage, searchQuery);
     }

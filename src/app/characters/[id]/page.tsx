@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from "react";
+import React, {FormEvent, useState} from "react";
 import {charactersService} from "@/service/characters/CharactersService";
 import {Button, TextField, Typography} from "@mui/material";
 import styles from './CharacterPage.module.css';
@@ -15,20 +15,22 @@ enum CharacterEditForm {
     SkinColor = 'skin_color',
 }
 
-export default () => {
+const CharacterPage = () => {
     const params = useParams();
     const characterId = params['id'] as string;
     const currentCharacter = useCurrentCharacter(characterId);
 
     const [isEditing, setIsEditing] = useState(false);
     const handleEditClick = () => setIsEditing(true);
-    const handleSaveClick = async (evt) => {
+    const handleSaveClick = async (evt: FormEvent) => {
         evt.preventDefault();
         if (!currentCharacter) {
             return;
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const values = Object.entries(CharacterEditForm).map(([_, fieldName]) => {
+            // @ts-expect-error form type validation
             const value = evt.target[fieldName].value;
             return [fieldName, value];
         });
@@ -100,3 +102,5 @@ export default () => {
         </main>
     )
 }
+
+export default CharacterPage;

@@ -1,6 +1,6 @@
 import {useCharactersStore} from "@/store/character/useCharactersStore";
 import {CharacterApi} from "@/api/characters/CharactersApi";
-import {ICharacterModel, ICharacterStore} from "@/store/character/types";
+import {ICharacterModel} from "@/store/character/types";
 
 class CharactersService {
     async loadCharacters(page = 1, query = '') {
@@ -10,7 +10,7 @@ class CharactersService {
             const {charactersMap} = useCharactersStore.getState?.();
             const charactersIdList = response.results.map(item => item.id);
             const newCharactersMap = this.updateCharactersMap(charactersMap, response.results);
-            useCharactersStore.setState<ICharacterStore>?.({
+            useCharactersStore.setState?.({
                 isLoading: false,
                 currentPage: page,
                 charactersIdList: charactersIdList,
@@ -51,7 +51,7 @@ class CharactersService {
                 charactersMap: this.updateCharactersMap(charactersMap, [response])
             })
         } catch (e) {
-            console.debug('Something went wrong while patching character');
+            console.debug('Something went wrong while patching character', e);
         }
     }
 

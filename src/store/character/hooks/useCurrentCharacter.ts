@@ -10,7 +10,7 @@ export const useCurrentCharacter = (id: string): ICharacterModel | null => {
         if (!charactersMap.has(id)) {
             charactersService.loadCharacter(id);
         }
-    }, [charactersMap])
+    }, [charactersMap, id]);
 
     return charactersMap.get(id) ?? null;
 }

@@ -13,7 +13,8 @@ export class CharacterApiProcessor {
         return Object.assign({}, apiCharacter, {id}) as ICharacterModel;
     }
 
-    static toApiCharacter(characterModel): ICharacterItemApiObject {
+    static toApiCharacter(characterModel: ICharacterModel): ICharacterItemApiObject {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const {id, ...apiCharacter} = characterModel;
         return apiCharacter as ICharacterItemApiObject;
     }

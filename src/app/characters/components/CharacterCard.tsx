@@ -1,6 +1,6 @@
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
 import React from "react";
-import {ICharacterModel} from "@/store/types";
+import {ICharacterModel} from "@/store/character/types";
 import Link from "next/link";
 import styles from './CharacterCard.module.css';
 

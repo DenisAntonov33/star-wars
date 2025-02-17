@@ -2,14 +2,16 @@
 import styles from "./page.module.css";
 import {useEffect, useMemo, useState} from "react";
 import {charactersService} from "@/service/characters/CharactersService";
-import {useCharactersStore} from "@/store/useCharactersStore";
+import {useCharactersStore} from "@/store/character/useCharactersStore";
 import {Pagination} from "@mui/material";
 import {SearchBar} from "@/components/search-field/SearchField";
 import {CharacterCard} from "@/app/characters/components/CharacterCard";
 import {SkeletonList} from "@/app/characters/components/SkeletonList";
+import {useCharactersList} from "@/store/character/hooks/useCharactersList";
 
 export default function Home() {
-    const {charactersList, isLoading, charactersCount} = useCharactersStore();
+    const {isLoading, charactersCount} = useCharactersStore();
+    const charactersList = useCharactersList();
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
 

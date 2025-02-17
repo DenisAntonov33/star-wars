@@ -1,4 +1,4 @@
-export interface ICharacterItemApiResponse {
+export interface ICharacterItemApiObject {
     name: string;
     height: string;
     mass: string;

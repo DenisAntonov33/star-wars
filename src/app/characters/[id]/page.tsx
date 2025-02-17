@@ -1,10 +1,11 @@
 "use client"
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {charactersService} from "@/service/characters/CharactersService";
-import {useCharactersStore} from "@/store/useCharactersStore";
 import {Button, TextField, Typography} from "@mui/material";
 import styles from './CharacterPage.module.css';
-import {ICharacterModel} from "@/store/types";
+import {ICharacterModel} from "@/store/character/types";
+import {useParams} from "next/navigation";
+import {useCurrentCharacter} from "@/store/character/hooks/useCurrentCharacter";
 
 enum CharacterEditForm {
     Height = 'height',
@@ -14,16 +15,12 @@ enum CharacterEditForm {
     SkinColor = 'skin_color',
 }
 
-export default ({params}) => {
-    const {currentCharacter} = useCharactersStore();
-    const initData = async () => {
-        const paramsData = await params;
-        await charactersService.loadCharacter(paramsData.id);
-    }
-    useEffect(() => {
-        initData();
-    }, []);
-    const [isEditing, setIsEditing] = useState(true);
+export default () => {
+    const params = useParams();
+    const characterId = params['id'] as string;
+    const currentCharacter = useCurrentCharacter(characterId);
+
+    const [isEditing, setIsEditing] = useState(false);
     const handleEditClick = () => setIsEditing(true);
     const handleSaveClick = async (evt) => {
         evt.preventDefault();
@@ -75,19 +72,19 @@ export default ({params}) => {
             )}
             {(currentCharacter && isEditing) && (
                 <form className={styles.form} onSubmit={handleSaveClick}>
-                    <TextField name={CharacterEditForm.Height} id={CharacterEditForm.Height} label="Standard"
+                    <TextField name={CharacterEditForm.Height} id={CharacterEditForm.Height} label="Height"
                                defaultValue={currentCharacter.height}
                                variant="standard"/>
-                    <TextField name={CharacterEditForm.Mass} id={CharacterEditForm.Mass} label="Standard"
+                    <TextField name={CharacterEditForm.Mass} id={CharacterEditForm.Mass} label="Mass"
                                defaultValue={currentCharacter.mass}
                                variant="standard"/>
-                    <TextField name={CharacterEditForm.EyeColor} id={CharacterEditForm.EyeColor} label="Standard"
+                    <TextField name={CharacterEditForm.EyeColor} id={CharacterEditForm.EyeColor} label="Eye color"
                                defaultValue={currentCharacter.eye_color}
                                variant="standard"/>
-                    <TextField name={CharacterEditForm.HairColor} id={CharacterEditForm.HairColor} label="Standard"
+                    <TextField name={CharacterEditForm.HairColor} id={CharacterEditForm.HairColor} label="Hair color"
                                defaultValue={currentCharacter.hair_color}
                                variant="standard"/>
-                    <TextField name={CharacterEditForm.SkinColor} id={CharacterEditForm.SkinColor} label="Standard"
+                    <TextField name={CharacterEditForm.SkinColor} id={CharacterEditForm.SkinColor} label="Skin color"
                                defaultValue={currentCharacter.skin_color}
                                variant="standard"/>
                     <Button

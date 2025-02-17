@@ -31,7 +31,6 @@ class CharactersService {
     async loadCharacter(id: string) {
         try {
             const {charactersMap} = useCharactersStore.getState?.();
-console.log('charactersMap >>', charactersMap)
             if (charactersMap.has(id)) {
                 useCharactersStore.setState?.({currentCharacter: charactersMap.get(id)})
                 return;
@@ -40,9 +39,20 @@ console.log('charactersMap >>', charactersMap)
             const response = await CharacterApi.fetchCharacter(id);
             this.updateCharactersMap(charactersMap, [response]);
             useCharactersStore.setState?.({currentCharacter: response})
-            console.log('response >>', response)
         } catch (e) {
+            console.debug('error >>', e)
+        }
+    }
 
+    async updateCharacter(id: string, updatedCharacter: Partial<ICharacterModel>) {
+        try {
+            const {charactersMap} = useCharactersStore.getState?.();
+            const targetCharacter: ICharacterModel = charactersMap.get(id);
+            const newCharacter = Object.assign({}, targetCharacter, updatedCharacter);
+            const response = await CharacterApi.patchCharacter(id, newCharacter);
+            charactersMap.set(id, response);
+        } catch (e) {
+            console.debug('Something went wrong while patching character');
         }
     }
 

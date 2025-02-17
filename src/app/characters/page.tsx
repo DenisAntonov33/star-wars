@@ -1,7 +1,7 @@
 "use client"
 import styles from "./page.module.css";
 import {useEffect, useMemo, useState} from "react";
-import {charactersService} from "@/service/people/CharactersService";
+import {charactersService} from "@/service/characters/CharactersService";
 import {useCharactersStore} from "@/store/useCharactersStore";
 import {Pagination} from "@mui/material";
 import {SearchBar} from "@/components/search-field/SearchField";

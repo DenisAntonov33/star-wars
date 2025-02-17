@@ -33,7 +33,7 @@ export default function Home() {
     }, [charactersCount])
 
     return (
-        <div className={styles.page}>
+        <>
             <SearchBar onChange={handleSearch}/>
             <main className={styles.main}>
                 {isLoading && <SkeletonList />}
@@ -44,6 +44,6 @@ export default function Home() {
             <footer className={styles.footer}>
                 <Pagination count={pageTotal} page={currentPage} onChange={handlePageChange}/>
             </footer>
-        </div>
+        </>
     );
 }
